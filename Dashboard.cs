@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -74,14 +75,36 @@ namespace CafeManagement
         {
             uC_UpdateItems1.Visible = true;
             uC_UpdateItems1.BringToFront();
+            uC_UpdateItems1.loadData();
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
             uC_RemoveItem1.Visible = true;
             uC_RemoveItem1.BringToFront();
+            uC_RemoveItem1.loadData();
 
         }
-        
+
+        private void Dashboard_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
+        }
+        private Point mousePoint;
+        private void Dashboard_MouseDown(object sender, MouseEventArgs e)
+        {
+            mousePoint = new Point(e.X, e.Y);
+        }
+
+        private void Dashboard_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+                Location = new Point(Left - (mousePoint.X - e.X), Top - (mousePoint.Y - e.Y));
+            }
+        }     
     }
 }

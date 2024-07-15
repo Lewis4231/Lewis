@@ -1,4 +1,4 @@
-﻿namespace ConveyorCs
+﻿namespace CafeManagement
 {
     partial class Form1
     {
@@ -28,258 +28,167 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.cbSensor2_1 = new System.Windows.Forms.CheckBox();
-            this.cbSensor1_5 = new System.Windows.Forms.CheckBox();
-            this.cbSensor1_9 = new System.Windows.Forms.CheckBox();
-            this.cbSensor1_10 = new System.Windows.Forms.CheckBox();
-            this.cbSensor1_1 = new System.Windows.Forms.CheckBox();
-            this.cbSensor1_2 = new System.Windows.Forms.CheckBox();
-            this.cbSensor1_6 = new System.Windows.Forms.CheckBox();
-            this.cbSensor1_7 = new System.Windows.Forms.CheckBox();
-            this.cbSensor2_2 = new System.Windows.Forms.CheckBox();
-            this.cbSensor1_8 = new System.Windows.Forms.CheckBox();
-            this.btnConveyor3 = new System.Windows.Forms.Button();
-            this.btnConveyorS = new System.Windows.Forms.Button();
-            this.btnConveyor2 = new System.Windows.Forms.Button();
-            this.btnConveyor4 = new System.Windows.Forms.Button();
-            this.btnConveyor1 = new System.Windows.Forms.Button();
-            this.btnAuto = new System.Windows.Forms.Button();
-            this.btnTakeIn = new System.Windows.Forms.Button();
-            this.btnStop = new System.Windows.Forms.Button();
-            this.btnTakeOut = new System.Windows.Forms.Button();
-            this.ConvMotionProc = new System.Windows.Forms.Timer(this.components);
-            this.MainSchedulerProc = new System.Windows.Forms.Timer(this.components);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtUsername = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtPassword = new Guna.UI2.WinForms.Guna2TextBox();
+            this.btnLogin = new Guna.UI2.WinForms.Guna2Button();
+            this.btnGuest = new System.Windows.Forms.LinkLabel();
+            this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // cbSensor2_1
+            // pictureBox1
             // 
-            this.cbSensor2_1.AutoSize = true;
-            this.cbSensor2_1.Location = new System.Drawing.Point(300, 380);
-            this.cbSensor2_1.Name = "cbSensor2_1";
-            this.cbSensor2_1.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor2_1.TabIndex = 0;
-            this.cbSensor2_1.Text = "2-1";
-            this.cbSensor2_1.UseVisualStyleBackColor = true;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(93, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(189, 198);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
-            // cbSensor1_5
+            // label1
             // 
-            this.cbSensor1_5.AutoSize = true;
-            this.cbSensor1_5.Location = new System.Drawing.Point(175, 240);
-            this.cbSensor1_5.Name = "cbSensor1_5";
-            this.cbSensor1_5.Size = new System.Drawing.Size(44, 16);
-            this.cbSensor1_5.TabIndex = 0;
-            this.cbSensor1_5.Text = "S-1";
-            this.cbSensor1_5.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(56, 228);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(90, 23);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "User Name";
             // 
-            // cbSensor1_9
+            // label2
             // 
-            this.cbSensor1_9.AutoSize = true;
-            this.cbSensor1_9.Location = new System.Drawing.Point(300, 100);
-            this.cbSensor1_9.Name = "cbSensor1_9";
-            this.cbSensor1_9.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor1_9.TabIndex = 0;
-            this.cbSensor1_9.Text = "4-1";
-            this.cbSensor1_9.UseVisualStyleBackColor = true;
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(56, 301);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(76, 23);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Password";
             // 
-            // cbSensor1_10
+            // txtUsername
             // 
-            this.cbSensor1_10.AutoSize = true;
-            this.cbSensor1_10.Location = new System.Drawing.Point(175, 160);
-            this.cbSensor1_10.Name = "cbSensor1_10";
-            this.cbSensor1_10.Size = new System.Drawing.Size(44, 16);
-            this.cbSensor1_10.TabIndex = 0;
-            this.cbSensor1_10.Text = "S-2";
-            this.cbSensor1_10.UseVisualStyleBackColor = true;
+            this.txtUsername.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtUsername.DefaultText = "Admin";
+            this.txtUsername.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtUsername.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtUsername.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtUsername.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtUsername.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.txtUsername.ForeColor = System.Drawing.Color.Black;
+            this.txtUsername.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtUsername.Location = new System.Drawing.Point(60, 255);
+            this.txtUsername.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.PasswordChar = '\0';
+            this.txtUsername.PlaceholderText = "Enter Username";
+            this.txtUsername.SelectedText = "";
+            this.txtUsername.Size = new System.Drawing.Size(245, 36);
+            this.txtUsername.TabIndex = 0;
             // 
-            // cbSensor1_1
+            // txtPassword
             // 
-            this.cbSensor1_1.AutoSize = true;
-            this.cbSensor1_1.Location = new System.Drawing.Point(50, 380);
-            this.cbSensor1_1.Name = "cbSensor1_1";
-            this.cbSensor1_1.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor1_1.TabIndex = 0;
-            this.cbSensor1_1.Text = "1-1";
-            this.cbSensor1_1.UseVisualStyleBackColor = true;
+            this.txtPassword.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtPassword.DefaultText = "123";
+            this.txtPassword.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtPassword.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtPassword.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtPassword.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtPassword.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.txtPassword.ForeColor = System.Drawing.Color.Black;
+            this.txtPassword.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtPassword.Location = new System.Drawing.Point(60, 328);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
+            this.txtPassword.PlaceholderText = "Enter Password";
+            this.txtPassword.SelectedText = "";
+            this.txtPassword.Size = new System.Drawing.Size(245, 36);
+            this.txtPassword.TabIndex = 1;
             // 
-            // cbSensor1_2
+            // btnLogin
             // 
-            this.cbSensor1_2.AutoSize = true;
-            this.cbSensor1_2.Location = new System.Drawing.Point(50, 300);
-            this.cbSensor1_2.Name = "cbSensor1_2";
-            this.cbSensor1_2.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor1_2.TabIndex = 0;
-            this.cbSensor1_2.Text = "1-2";
-            this.cbSensor1_2.UseVisualStyleBackColor = true;
+            this.btnLogin.BorderRadius = 20;
+            this.btnLogin.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.btnLogin.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.ToogleButton;
+            this.btnLogin.CheckedState.FillColor = System.Drawing.Color.White;
+            this.btnLogin.CheckedState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(118)))), ((int)(((byte)(221)))));
+            this.btnLogin.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnLogin.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnLogin.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnLogin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnLogin.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(118)))), ((int)(((byte)(221)))));
+            this.btnLogin.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLogin.ForeColor = System.Drawing.Color.White;
+            this.btnLogin.Location = new System.Drawing.Point(93, 383);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(180, 45);
+            this.btnLogin.TabIndex = 2;
+            this.btnLogin.Text = "Login";
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // cbSensor1_6
+            // btnGuest
             // 
-            this.cbSensor1_6.AutoSize = true;
-            this.cbSensor1_6.Location = new System.Drawing.Point(50, 20);
-            this.cbSensor1_6.Name = "cbSensor1_6";
-            this.cbSensor1_6.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor1_6.TabIndex = 0;
-            this.cbSensor1_6.Text = "3-2";
-            this.cbSensor1_6.UseVisualStyleBackColor = true;
+            this.btnGuest.AutoSize = true;
+            this.btnGuest.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnGuest.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnGuest.Location = new System.Drawing.Point(109, 447);
+            this.btnGuest.Name = "btnGuest";
+            this.btnGuest.Size = new System.Drawing.Size(143, 16);
+            this.btnGuest.TabIndex = 3;
+            this.btnGuest.TabStop = true;
+            this.btnGuest.Text = "Continue as Guest";
+            this.btnGuest.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnGuest_LinkClicked);
             // 
-            // cbSensor1_7
+            // guna2CircleButton1
             // 
-            this.cbSensor1_7.AutoSize = true;
-            this.cbSensor1_7.Location = new System.Drawing.Point(50, 100);
-            this.cbSensor1_7.Name = "cbSensor1_7";
-            this.cbSensor1_7.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor1_7.TabIndex = 0;
-            this.cbSensor1_7.Text = "3-1";
-            this.cbSensor1_7.UseVisualStyleBackColor = true;
-            // 
-            // cbSensor2_2
-            // 
-            this.cbSensor2_2.AutoSize = true;
-            this.cbSensor2_2.Location = new System.Drawing.Point(300, 300);
-            this.cbSensor2_2.Name = "cbSensor2_2";
-            this.cbSensor2_2.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor2_2.TabIndex = 0;
-            this.cbSensor2_2.Text = "2-2";
-            this.cbSensor2_2.UseVisualStyleBackColor = true;
-            // 
-            // cbSensor1_8
-            // 
-            this.cbSensor1_8.AutoSize = true;
-            this.cbSensor1_8.Location = new System.Drawing.Point(300, 20);
-            this.cbSensor1_8.Name = "cbSensor1_8";
-            this.cbSensor1_8.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor1_8.TabIndex = 0;
-            this.cbSensor1_8.Text = "4-2";
-            this.cbSensor1_8.UseVisualStyleBackColor = true;
-            // 
-            // btnConveyor3
-            // 
-            this.btnConveyor3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnConveyor3.Location = new System.Drawing.Point(110, 20);
-            this.btnConveyor3.Name = "btnConveyor3";
-            this.btnConveyor3.Size = new System.Drawing.Size(180, 110);
-            this.btnConveyor3.TabIndex = 1;
-            this.btnConveyor3.UseVisualStyleBackColor = false;
-            // 
-            // btnConveyorS
-            // 
-            this.btnConveyorS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnConveyorS.Location = new System.Drawing.Point(230, 160);
-            this.btnConveyorS.Name = "btnConveyorS";
-            this.btnConveyorS.Size = new System.Drawing.Size(180, 110);
-            this.btnConveyorS.TabIndex = 2;
-            this.btnConveyorS.UseVisualStyleBackColor = false;
-            // 
-            // btnConveyor2
-            // 
-            this.btnConveyor2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnConveyor2.Location = new System.Drawing.Point(360, 300);
-            this.btnConveyor2.Name = "btnConveyor2";
-            this.btnConveyor2.Size = new System.Drawing.Size(180, 110);
-            this.btnConveyor2.TabIndex = 3;
-            this.btnConveyor2.UseVisualStyleBackColor = false;
-            // 
-            // btnConveyor4
-            // 
-            this.btnConveyor4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnConveyor4.Location = new System.Drawing.Point(360, 20);
-            this.btnConveyor4.Name = "btnConveyor4";
-            this.btnConveyor4.Size = new System.Drawing.Size(180, 110);
-            this.btnConveyor4.TabIndex = 4;
-            this.btnConveyor4.UseVisualStyleBackColor = false;
-            // 
-            // btnConveyor1
-            // 
-            this.btnConveyor1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnConveyor1.Location = new System.Drawing.Point(110, 300);
-            this.btnConveyor1.Name = "btnConveyor1";
-            this.btnConveyor1.Size = new System.Drawing.Size(180, 110);
-            this.btnConveyor1.TabIndex = 5;
-            this.btnConveyor1.Text = " ";
-            this.btnConveyor1.UseVisualStyleBackColor = false;
-            // 
-            // btnAuto
-            // 
-            this.btnAuto.BackColor = System.Drawing.Color.White;
-            this.btnAuto.Location = new System.Drawing.Point(600, 20);
-            this.btnAuto.Name = "btnAuto";
-            this.btnAuto.Size = new System.Drawing.Size(150, 90);
-            this.btnAuto.TabIndex = 6;
-            this.btnAuto.Text = "자동";
-            this.btnAuto.UseVisualStyleBackColor = false;
-            this.btnAuto.Click += new System.EventHandler(this.btnAuto_Click);
-            // 
-            // btnTakeIn
-            // 
-            this.btnTakeIn.BackColor = System.Drawing.Color.White;
-            this.btnTakeIn.Location = new System.Drawing.Point(600, 320);
-            this.btnTakeIn.Name = "btnTakeIn";
-            this.btnTakeIn.Size = new System.Drawing.Size(150, 90);
-            this.btnTakeIn.TabIndex = 7;
-            this.btnTakeIn.Text = "입고";
-            this.btnTakeIn.UseVisualStyleBackColor = false;
-            this.btnTakeIn.Click += new System.EventHandler(this.btnTakeIn_Click);
-            // 
-            // btnStop
-            // 
-            this.btnStop.BackColor = System.Drawing.Color.White;
-            this.btnStop.Location = new System.Drawing.Point(600, 220);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(150, 90);
-            this.btnStop.TabIndex = 8;
-            this.btnStop.Text = "정지";
-            this.btnStop.UseVisualStyleBackColor = false;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
-            // 
-            // btnTakeOut
-            // 
-            this.btnTakeOut.BackColor = System.Drawing.Color.White;
-            this.btnTakeOut.Location = new System.Drawing.Point(600, 120);
-            this.btnTakeOut.Name = "btnTakeOut";
-            this.btnTakeOut.Size = new System.Drawing.Size(150, 90);
-            this.btnTakeOut.TabIndex = 9;
-            this.btnTakeOut.Text = "반출";
-            this.btnTakeOut.UseVisualStyleBackColor = false;
-            this.btnTakeOut.Click += new System.EventHandler(this.btnTakeOut_Click);
-            // 
-            // ConvMotionProc
-            // 
-            this.ConvMotionProc.Enabled = true;
-            this.ConvMotionProc.Interval = 1000;
-            this.ConvMotionProc.Tick += new System.EventHandler(this.ConvMotionProc_Tick);
-            // 
-            // MainSchedulerProc
-            // 
-            this.MainSchedulerProc.Enabled = true;
-            this.MainSchedulerProc.Interval = 1000;
-            this.MainSchedulerProc.Tick += new System.EventHandler(this.MainSchedulerProc_Tick);
+            this.guna2CircleButton1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2CircleButton1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2CircleButton1.FillColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2CircleButton1.ForeColor = System.Drawing.Color.Black;
+            this.guna2CircleButton1.Location = new System.Drawing.Point(339, 12);
+            this.guna2CircleButton1.Name = "guna2CircleButton1";
+            this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.guna2CircleButton1.Size = new System.Drawing.Size(26, 26);
+            this.guna2CircleButton1.TabIndex = 4;
+            this.guna2CircleButton1.Text = "X";
+            this.guna2CircleButton1.Click += new System.EventHandler(this.guna2CircleButton1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 441);
-            this.Controls.Add(this.btnTakeOut);
-            this.Controls.Add(this.btnStop);
-            this.Controls.Add(this.btnTakeIn);
-            this.Controls.Add(this.btnAuto);
-            this.Controls.Add(this.btnConveyor1);
-            this.Controls.Add(this.btnConveyor4);
-            this.Controls.Add(this.btnConveyor2);
-            this.Controls.Add(this.btnConveyorS);
-            this.Controls.Add(this.btnConveyor3);
-            this.Controls.Add(this.cbSensor1_8);
-            this.Controls.Add(this.cbSensor1_7);
-            this.Controls.Add(this.cbSensor1_10);
-            this.Controls.Add(this.cbSensor1_6);
-            this.Controls.Add(this.cbSensor2_2);
-            this.Controls.Add(this.cbSensor1_9);
-            this.Controls.Add(this.cbSensor1_2);
-            this.Controls.Add(this.cbSensor1_1);
-            this.Controls.Add(this.cbSensor1_5);
-            this.Controls.Add(this.cbSensor2_1);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.ClientSize = new System.Drawing.Size(373, 540);
+            this.Controls.Add(this.guna2CircleButton1);
+            this.Controls.Add(this.btnGuest);
+            this.Controls.Add(this.btnLogin);
+            this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.txtUsername);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.pictureBox1);
+            this.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "Conveyor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Login";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -287,27 +196,14 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox cbSensor2_1;
-        private System.Windows.Forms.CheckBox cbSensor1_5;
-        private System.Windows.Forms.CheckBox cbSensor1_9;
-        private System.Windows.Forms.CheckBox cbSensor1_10;
-        private System.Windows.Forms.CheckBox cbSensor1_1;
-        private System.Windows.Forms.CheckBox cbSensor1_2;
-        private System.Windows.Forms.CheckBox cbSensor1_6;
-        private System.Windows.Forms.CheckBox cbSensor1_7;
-        private System.Windows.Forms.CheckBox cbSensor2_2;
-        private System.Windows.Forms.CheckBox cbSensor1_8;
-        private System.Windows.Forms.Button btnConveyor3;
-        private System.Windows.Forms.Button btnConveyorS;
-        private System.Windows.Forms.Button btnConveyor2;
-        private System.Windows.Forms.Button btnConveyor4;
-        private System.Windows.Forms.Button btnConveyor1;
-        private System.Windows.Forms.Button btnAuto;
-        private System.Windows.Forms.Button btnTakeIn;
-        private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.Button btnTakeOut;
-        private System.Windows.Forms.Timer ConvMotionProc;
-        private System.Windows.Forms.Timer MainSchedulerProc;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private Guna.UI2.WinForms.Guna2TextBox txtUsername;
+        private Guna.UI2.WinForms.Guna2TextBox txtPassword;
+        private Guna.UI2.WinForms.Guna2Button btnLogin;
+        private System.Windows.Forms.LinkLabel btnGuest;
+        private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
     }
 }
 
