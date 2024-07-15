@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CafeManagement.Properties
+namespace RM.Properties
 {
 
 
