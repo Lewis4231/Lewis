@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
 
 namespace CafeManagement.AllUserControls
@@ -25,7 +26,7 @@ namespace CafeManagement.AllUserControls
         }
         public void loadData()
         {
-            query = "select *from items";
+            query = "select * from items";
             DataSet ds = fn.getData(query);
             guna2DataGridView1.DataSource = ds.Tables[0];
         }
@@ -45,25 +46,43 @@ namespace CafeManagement.AllUserControls
             String name = guna2DataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
             int price = int.Parse(guna2DataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
 
-            txtCategory.Text = category;
+            comboCategory.Text = category;
             txtName.Text = name;
             txtPrice.Text = price.ToString();
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
-        { //업데이트 버튼 클릭시, 텍스트 박스에서 수정된 사항을 데이터 베이스에 저장
-            query = "update items set name = '" + txtName.Text + "',category = '" + txtCategory.Text + "',price = " + txtPrice.Text + " where iid = "+id+"";
-            fn.setData(query);
-            loadData(); //수정된 사항을 실시간으로 확인하기 위해 데이터를 다시 불러옴
+        {
+            int s = 0;
+            bool a = false;
+            a = int.TryParse(txtPrice.Text, out s);
+            if (comboCategory.Text == "")
+            {
+                MessageBox.Show("Select item!", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            }                     
+            else if(txtPrice.Text == "" || a == false || int.Parse(txtPrice.Text) < 0) MessageBox.Show("Insert price!", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            else if (txtName.Text == "") MessageBox.Show("Insert Name!", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            else
+            {
+                //업데이트 버튼 클릭시, 텍스트 박스에서 수정된 사항을 데이터 베이스에 저장
+                query = "update items set name = '" + txtName.Text + "',category = '" + comboCategory.Text + "',price = " + txtPrice.Text + " where iid = " + id + "";
+                fn.setData(query);
+                loadData(); //수정된 사항을 실시간으로 확인하기 위해 데이터를 다시 불러옴
 
-            txtName.Clear();
-            txtCategory.Clear();
-            txtPrice.Clear();
+                txtName.Clear();
+                //txtCategory.Clear();
+                txtPrice.Clear();
+            }            
         }
 
         private void UC_UpdateItems_Enter(object sender, EventArgs e)
         {
             loadData();
+        }
+        private void comboCategory_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            String category = comboCategory.Text;
+            query = "select name from items where category = '" + category + "'";
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace CafeManagement.AllUserControls
 {
@@ -21,10 +22,21 @@ namespace CafeManagement.AllUserControls
 
         private void btnAddItem_Click(object sender, EventArgs e)
         {
-            //쿼리에 데이터 입력
-            query = "insert into items (name, category, price) values ('" + txtItemName.Text + "','" + txtCategory.Text + "','"+txtPrice.Text+"')";
-            fn.setData(query);
+            int s = 0;
+            bool a = false;
+            a = int.TryParse(txtPrice.Text, out s);
+            if (txtCategory.Text == "")
+            {
+                MessageBox.Show("Select category!", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            }
+            else if (txtPrice.Text == "" || a == false || int.Parse(txtPrice.Text) < 0) MessageBox.Show("Insert price!", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            else if (txtItemName.Text == "") MessageBox.Show("Insert Name!", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            else { 
+                //쿼리에 데이터 입력
+                query = "insert into items (name, category, price) values ('" + txtItemName.Text + "','" + txtCategory.Text + "','"+txtPrice.Text+"')";
+            fn.setData(query);            
             clearAll();
+            }
         }
         public void clearAll()
         {

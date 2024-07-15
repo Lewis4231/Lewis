@@ -65,9 +65,9 @@
             this.labelBanner.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelBanner.Location = new System.Drawing.Point(30, 400);
             this.labelBanner.Name = "labelBanner";
-            this.labelBanner.Size = new System.Drawing.Size(417, 56);
+            this.labelBanner.Size = new System.Drawing.Size(273, 56);
             this.labelBanner.TabIndex = 2;
-            this.labelBanner.Text = "BTech Days Cafe";
+            this.labelBanner.Text = "Lewis Cafe";
             // 
             // timer1
             // 
