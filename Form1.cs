@@ -3,76 +3,116 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CafeManagement
+namespace CollegeVideo
 {
     public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
+            //Enter/ESC 키 작동하기
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(Form1_KeyDown);
+
         }
 
-        private void btnGuest_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            //게스트 입장시
-            Dashboard ds = new Dashboard("Guest");
-            ds.Show();
-            this.Hide(); 
+        private void Form1_Load(object sender, EventArgs e)
+        {   
+            menuStrip1.Visible = false;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
-        {
-            //로그인 성공시 대시보드 Show
-            if(txtUsername.Text=="Admin" && txtPassword.Text == "123")
+        {   //로그인 하기
+            String username = textBox1.Text;
+            String password = textBox2.Text;
+
+            if(username == "student" && password == "student")
             {
-                Dashboard ds = new Dashboard("Admin");
-                ds.Show();
-                this.Hide();
+                menuStrip1.Visible = true;
+                panel1.Visible = false;
             }
-            if(txtUsername.Text != "Admin")
+            else
             {
-                MessageBox.Show("Check your ID!","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
-            }
-            if( txtUsername.Text == "Admin" && txtPassword.Text != "123")
-            {
-                MessageBox.Show("Check your password!","Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Invalid userid or password","Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void guna2CircleButton1_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.KeyCode == Keys.Escape)
+        {   //Enter/ESC 키 작동하기
+
+            if (e.KeyCode == Keys.Escape)
             {
                 this.Close();
             }
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 btnLogin.PerformClick();
             }
         }
-        private Point mousePoint;
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
-        {
-            mousePoint = new Point(e.X, e.Y);
+
+        private void newAdmissionToolStripMenuItem_Click(object sender, EventArgs e)
+        {   //NEW admission tool strip 눌렀을때 New Admission 윈폼 띄우기
+            New_Admission na = new New_Admission();
+            na.Show();
         }
 
-        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        private void upgradeSemesterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if((e.Button & MouseButtons.Left) == MouseButtons.Left)
-            {
-                Location = new Point(Left - (mousePoint.X - e.X), Top - (mousePoint.Y - e.Y));
-            }
+            UpgradeSemester us = new UpgradeSemester();
+            us.Show();
+        }
+
+        private void feesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Fees fs = new Fees();
+            fs.Show();
+        }
+
+        private void searchStudentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SearchStudent ss = new SearchStudent();
+            ss.Show();
+        }
+
+        private void individualDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StudentIndividualDetail sid = new StudentIndividualDetail();
+            sid.Show();
+        }
+
+        private void addTeacherInformationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddTeacher at = new AddTeacher();
+            at.Show();
+        }
+
+        private void searchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SearchTeacher st = new SearchTeacher();
+            st.Show();
+        }
+
+        private void removeStudentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RemoveStudent rs = new RemoveStudent();
+            rs.Show();
+        }
+
+        private void aboutUsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutUS uS = new AboutUS();
+            uS.Show();
+        }
+
+        private void exitSystemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
