@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CafeManagement.AllUserControls
+{
+    public partial class UC_Welcome : UserControl
+    {
+        public UC_Welcome()
+        {
+            InitializeComponent();
+        }
+
+        int num = 0;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            //타이머가 0일때 "Label Banner"의 위치와 색깔 바꾸기
+            if(num == 0)
+            {
+                labelBanner.Location = new Point(94,400);
+                labelBanner.ForeColor = Color.Orange;
+                num++;
+            }
+            else if(num == 1)
+            {
+                labelBanner.Location = new Point(166, 400);
+                labelBanner.ForeColor = Color.Green;
+                num++;
+            }
+            else if(num == 2)
+            {
+                labelBanner.Location = new Point(268, 400);
+                labelBanner.ForeColor = Color.RoyalBlue;
+                num = 0; 
+            }
+        }
+
+        private void UC_Welcome_Load(object sender, EventArgs e)
+        {
+            // UC_Welcome 로드시 타이머 시작
+            timer1.Start();
+        }
+    }
+}
