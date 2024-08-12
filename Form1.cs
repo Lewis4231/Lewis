@@ -4,485 +4,543 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO.Ports;
-using System.Security.Policy;
-using System.Diagnostics.Eventing.Reader;
-using System.IO;
-using MySql.Data.MySqlClient;
 
-namespace ComportSerial
+namespace ConveyorCs
 {
     public partial class Form1 : Form
     {
-        string sendWith;
-        string dataIN;
-        int dataINLength;
-        int[] dataInDec;
+        bool blsSimulatorMode = true;
 
-        StreamWriter objStreamWriter;
-        //string pathFile = @"C:\Users\admin\source\repos\ComportSerial\_My Source File\SerialData.txt";
-        string pathFile;
-        bool state_AppendText = true;
+        CConveyor1 conveyor1;
+        CConveyor2 conveyor2;
+        CConveyor3 conveyor3;
+        CConveyor4 conveyor4;
+        CConveyorS conveyorS;
 
-        MySqlConnection myConnection;
-        MySqlCommand myCommand;
-
-        #region My Own Method
-        private void SaveDataToTxtFile()
-        {
-            if (saveToTxtFileToolStripMenuItem.Checked)
-            {   //메모장에 글쓰기
-                try
-                {
-                    objStreamWriter = new StreamWriter(pathFile, state_AppendText);  //pathFile 경로에 있는 해당 파일을 가져옴
-                    if (toolStripComboBox_wrtieLineOrwriteText.Text == "WriteLine")
-                    {
-                        objStreamWriter.WriteLine(dataIN);  //dataIN에 있는 텍스트를 WriteLine 으로 작성함
-                    }
-                    else if (toolStripComboBox_wrtieLineOrwriteText.Text == "Write")
-                    {
-                        objStreamWriter.Write(dataIN + " ");  //dataIN에 있는 텍스트를 Write 으로 작성함
-                    }
-                    objStreamWriter.Close();  // 닫기
-                }
-                catch (Exception err)
-                {
-                    MessageBox.Show(err.Message);
-                }
-
-            }
-        }
-        private void SaveDataToMySqlDatabase()
-        {
-            if (saveToMySQLDatabaeToolStripMenuItem.Checked)
-            {
-                try
-                {  //MySql에 연결하는 명령문
-                    myConnection = new MySqlConnection("server=localhost; username=root; password=; port=3306; database=database01");
-                    myConnection.Open();
-
-                    myCommand = new MySqlCommand(string.Format("INSERT INTO `table01` VALUES('{0}')", dataIN), myConnection);
-                    myCommand.ExecuteNonQuery();
-
-                    myConnection.Close();
-
-                    RefreshDataGridViewForm2();
-                }
-
-                catch (Exception error)
-                {
-                    MessageBox.Show(error.Message);
-                }
-            }
-        }
-        #region Custom EventHandler
-        public delegate void UpdateDelegate(object sender, UpdateDataEventArgs args);
-
-        public event UpdateDelegate UpdateDataEventHandler;
-
-        public class UpdateDataEventArgs : EventArgs
-        {
-
-        }
-        protected void RefreshDataGridViewForm2()
-        {
-            UpdateDataEventArgs args = new UpdateDataEventArgs();
-            UpdateDataEventHandler.Invoke(this, args);
-        }
-        #endregion
-        #region RX Data Format
-        private string RxDataFormat(int[] dataInput)
-        {
-            string strOut = "";
-            if (toolStripComboBox_RxDataFormat.Text == "Hex")
-            {
-                foreach(int element in dataInput)
-                {
-                    strOut += Convert.ToString(element, 16) + "\t";
-                }
-            }
-            else if (toolStripComboBox_RxDataFormat.Text == "Decimal")
-            {
-                foreach (int element in dataInput)
-                {
-                    strOut += Convert.ToString(element) + "\t";
-                }
-            }
-            else if (toolStripComboBox_RxDataFormat.Text == "Binary")
-            {
-                foreach (int element in dataInput)
-                {
-                    strOut += Convert.ToString(element, 2) + "\t";
-                }
-            }
-            else if (toolStripComboBox_RxDataFormat.Text == "Char")
-            {
-                foreach (int element in dataInput)
-                {
-                    strOut += Convert.ToChar(element);
-                }
-            }
-            return strOut;
-        }
-        #endregion
-        #region TX Data Format
-        private void TxDataFormat()
-        {
-            if(toolStripComboBox_TxDataFormat.Text == "Char")
-            {  // 시리얼 포트를 통해서 텍스트 박스에 있는 데이터 보내기
-                serialPort1.Write(tBoxDataOut.Text);
-                int dataOUTLength = tBoxDataOut.TextLength;
-                lblDataOutLength.Text = string.Format("{0:00}", dataOUTLength);
-            }
-            else
-            {
-                string dataOutBuffer;
-                int countComma = 0;
-                string[] dataPrepareToSend;
-                byte[] dataToSend;
-
-                try
-                {   //텍스트 박스안에있는 패키지 데이터를 변수로 옮기기
-                    dataOutBuffer = tBoxDataOut.Text;
-                    //콤마가 몇개있는지 검사하기
-                    foreach(char c in dataOutBuffer) { if (c == ',') { countComma++; } }
-                    //콤마개수를 길이로 하는 1차원 배열 만들기
-                    dataPrepareToSend = new string[countComma];
-
-                    countComma = 0;
-                    foreach(char c in dataOutBuffer)
-                    {
-                        if ((c != ','))
-                        {
-                            dataPrepareToSend[countComma] += c;
-                        }
-                        else
-                        {
-                            countComma++;
-
-                            if(countComma == dataPrepareToSend.GetLength(0)) { break; }
-                        }
-                    }
-                    dataToSend = new byte[dataPrepareToSend.Length];
-
-                    if (toolStripComboBox_TxDataFormat.Text == "Hex")
-                    {
-                        for(int a = 0; a < dataPrepareToSend.Length; a++)
-                        {
-                            dataToSend[a] = Convert.ToByte(dataPrepareToSend[a], 16);
-                        }
-                    }
-                    else if (toolStripComboBox_TxDataFormat.Text == "Binary")
-                    {
-                        for (int a = 0; a < dataPrepareToSend.Length; a++)
-                        {
-                            dataToSend[a] = Convert.ToByte(dataPrepareToSend[a], 2);
-                        }
-
-                    }
-                    else if (toolStripComboBox_TxDataFormat.Text == "Decimal")
-                    {
-                        for (int a = 0; a < dataPrepareToSend.Length; a++)
-                        {
-                            dataToSend[a] = Convert.ToByte(dataPrepareToSend[a], 10);
-                        }
-                    }
-
-                    serialPort1.Write(dataToSend, 0, dataToSend.Length);
-
-                    lblDataOutLength.Text = string.Format("{0:00}", dataToSend.Length);
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show(error.Message);
-                }                
-            }
-        }
-        private void TxSendData()
-        {   //SendData 버튼 클릭시
-            if (serialPort1.IsOpen) //시리얼 포트가 열려있으면
-            {
-                //dataOUT = tBoxDataOut.Text;    //변수 생성
-                if (sendWith == "None")
-                {
-                    TxDataFormat();
-                }
-                else if (sendWith == @"Both (\r\n)")
-                {
-                    TxDataFormat();
-                    serialPort1.Write("\r\n");
-                }
-                else if (sendWith == @"New Line (\n)")
-                {
-                    TxDataFormat();
-                    serialPort1.Write("\n");
-
-                }
-                else if (sendWith == @"Carriage Return (\r)")
-                {
-                    TxDataFormat();
-                    serialPort1.Write("\r");
-
-                }
-            }
-            if (clearToolStripMenuItem.Checked)
-            {
-                if (tBoxDataOut.Text != "")
-                {
-                    tBoxDataOut.Text = "";
-                }
-            }
-        }
-        #endregion
-        #endregion
-        #region GUI Method
+        CBarCode barcode;
         public Form1()
         {
             InitializeComponent();
+            conveyor1 = new CConveyor1();
+            conveyor2 = new CConveyor2();
+            conveyor3 = new CConveyor3();
+            conveyor4 = new CConveyor4();
+            conveyorS = new CConveyorS();
+
+            barcode = new CBarCode();
         }
-        private void Form1_Load(object sender, EventArgs e)
+        private void btnTakeIn_Click(object sender, EventArgs e)
         {
-            chBoxDtrEnable.Checked = false; //기본값은  false 
-            serialPort1.DtrEnable = false;
-            chBoxRTSEnable.Checked = false;
-            serialPort1.RtsEnable = false;
-            btnSendData.Enabled = true;
-            sendWith = @"Both (\r\n)";
-            toolStripComboBox_RxDataPosition.Text = "BOTTOM";
-            toolStripComboBox_RxShowDataWith.Text = "Add to Old Data";
-            toolStripComboBox_TxtEndLine.Text = @"Both (\r\n)";
-
-            toolStripComboBox_appendOrOverwriteText.Text = "Append Text";
-            toolStripComboBox_wrtieLineOrwriteText.Text = "WriteLine";
-
-            pathFile = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-            pathFile += @"\_My Source File\SerialData.txt";
-
-            saveToTxtFileToolStripMenuItem.Checked = false;
-            saveToMySQLDatabaeToolStripMenuItem.Checked = false;
-
-            toolStripComboBox_RxDataFormat.Text = "Char";
-            toolStripComboBox_TxDataFormat.Text = "Char";
-
-            this.toolStripComboBox_TxDataFormat.ComboBox.SelectionChangeCommitted += new System.EventHandler(this.toolStripComboBox_TxDataFormat_SelectionChangeCommitted);
-        }
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {  //Opne 버튼 클릭시 시리얼 포트 오픈하기
-            try
+            if(conveyor2.carrier.id == 0)
             {
-                serialPort1.PortName = cBoxCOMPORT.Text;
-                serialPort1.BaudRate = Convert.ToInt32(cBoxBaudRate.Text);
-                serialPort1.DataBits = Convert.ToInt32(cBoxDataBits.Text);
-                serialPort1.StopBits = (StopBits)Enum.Parse(typeof(StopBits), cBoxStopBits.Text);
-                serialPort1.Parity = (Parity)Enum.Parse(typeof(Parity), cBoxParityBits.Text);
+                conveyor2.carrier.id = 1;
+                conveyor2.carrier.source = 2;
+                conveyor2.carrier.use=CCarrier.USE.USE_STACK;
+                
+                conveyor2.takeIn = true;
 
-                serialPort1.Open();
-                progressBar1.Value = 100;
-            }
-            catch (Exception err)  //예외 상황
-            {
-                MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
-        {   //CLose 버튼 클릭시
-            if (serialPort1.IsOpen)
-            {
-                serialPort1.Close();
-                progressBar1.Value = 0;
-            }
-
-        }
-        private void btnSendData_Click(object sender, EventArgs e)
-        {
-            TxSendData();
-        }
-        private void toolStripComboBox2_DropDownClosed(object sender, EventArgs e)
-        {
-            //None
-            //Both
-            //New Line
-            //Carriage Return
-
-            if (toolStripComboBox_TxtEndLine.Text == "None") sendWith = "None";
-            else if (toolStripComboBox_TxtEndLine.Text == @"Both (\r\n)") sendWith = @"Both (\r\n)";
-            else if (toolStripComboBox_TxtEndLine.Text == @"New Line (\n)") sendWith = @"New Line (\n)";
-            else if (toolStripComboBox_TxtEndLine.Text == @"Carriage Return (\r)") sendWith = @"Carriage Return (\r)";
-        }
-        private void chBoxDtrEnable_CheckedChanged(object sender, EventArgs e)
-        {   //체크박스 체크시
-            if (chBoxDtrEnable.Checked)
-            {
-                serialPort1.DtrEnable = true;
-                MessageBox.Show("DTR Enable", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
-            else serialPort1.DtrEnable = false;                      
-        }
-        private void chBoxRTSEnable_CheckedChanged(object sender, EventArgs e)
-        {   //체크박스 체크시
-            if (chBoxRTSEnable.Checked)
-            {
-                serialPort1.RtsEnable = true;
-                MessageBox.Show("RTS Enable", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else serialPort1.RtsEnable = false;
-        }
-        private void tBoxDataOut_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.KeyCode == Keys.Enter) //엔터키 눌렀을때
-            {
-                // 엔터키 눌렀을때 소리 안나게 하지
-                this.doSomething();
-                e.Handled = true;
-                e.SuppressKeyPress = true;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Input Button Clicked..!");
+                Console.ResetColor();
             }            
         }
-        private void doSomething()
+        private void btnStop_Click(object sender, EventArgs e)
         {
-            TxSendData();
+            conveyor1.auto = false;
+            conveyor2.auto = false;
+            conveyor3.auto = false;
+            conveyor4.auto = false;
+            conveyorS.auto = false;
+
+            barcode.ReadCommand();
         }
-        private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)  //데이터를 받았을때
+
+        private void btnTakeOut_Click(object sender, EventArgs e)
         {
-            //dataIN = serialPort1.ReadExisting();  //시리얼 포트로부터 현재 수신된 모든 데이터를 읽어 dataIN변수에 저장 
-
-            List<int> dataBuffer = new List<int>();
-
-            while(serialPort1.BytesToRead > 0)
+            if(selectedConv == CONV_TYPE.CONV3)
             {
-                try
+                if (conveyor3.carrier.id != 0)
                 {
-                    dataBuffer.Add(serialPort1.ReadByte());
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show(error.Message);
+                    conveyor3.carrier.use = CCarrier.USE.USE_TAKEOUT;
                 }
             }
-            dataINLength = dataBuffer.Count();
-            dataInDec = new int[dataINLength];
-            dataInDec = dataBuffer.ToArray();
-
-            this.Invoke(new EventHandler(ShowData));  //메인 UI 스레드에서 ShowData 메서드를 호출함
-        }
-        private void ShowData(object sender, EventArgs e)
-        {
-            //int dataINLength = dataIN.Length;
-            dataIN = RxDataFormat(dataInDec);
-            lblDataInLength.Text = string.Format("{0:00}", dataINLength);
-            if (toolStripComboBox_RxShowDataWith.Text == "Always Update") tBoxDataIN.Text = dataIN;  //dataIN에 저장된 데이터를 tBoxDataIN에 표시
-            else if (toolStripComboBox_RxShowDataWith.Text == "Add to Old Data")
+            if (selectedConv == CONV_TYPE.CONV4)
             {
-                if(toolStripComboBox_RxDataPosition.Text == "TOP")
+                if (conveyor4.carrier.id != 0)
                 {
-                    tBoxDataIN.Text = tBoxDataIN.Text.Insert(0, dataIN);  //dataIN에 저장된 데이터를 tBoxDataIN에 계속 추가하여 표시
+                    conveyor4.carrier.use = CCarrier.USE.USE_TAKEOUT;
                 }
-                else if(toolStripComboBox_RxDataPosition.Text == "BOTTOM")
-                {
-                    tBoxDataIN.Text += dataIN;
-                }                                
             }
-            SaveDataToTxtFile();
-            SaveDataToMySqlDatabase();
-        }    
-        private void clearToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            if (tBoxDataIN.Text != "") tBoxDataIN.Text = "";
         }
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Created by Lewis K","Creator",MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-        private void Form1_Resize(object sender, EventArgs e)
-        {
-            groupBox12.Width = panel1.Width - 224;
-            groupBox12.Height = panel1.Height - 42;
 
-            tBoxDataIN.Height = panel1.Height - 95;
-        }
-        private void toolStripComboBox_appendOrOverwriteText_DropDownClosed(object sender, EventArgs e)
+        private void btnAuto_Click(object sender, EventArgs e)
         {
-            if(toolStripComboBox_appendOrOverwriteText.Text == "Append Text")
+            conveyor1.auto = true;
+            conveyor2.auto = true;
+            conveyor3.auto = true;
+            conveyor4.auto = true;
+            conveyorS.auto = true;
+        }
+
+        bool ConvMotionBlink;
+        private void ConvMotionProc_Tick(object sender, EventArgs e)
+        {
+            if (ConvMotionBlink == true)
             {
-                state_AppendText = true;
+                btnConveyor1.Text = "";
+                btnConveyor2.Text = "";
+                btnConveyor3.Text = "";
+                btnConveyor4.Text = "";
+                btnConveyorS.Text = "";
+
+                ConvMotionBlink = false;
             }
             else
             {
-                state_AppendText = false;
+                if (!conveyor1.statusCw && !conveyor1.statusCcw) btnConveyor1.Text = "";
+                else if (conveyor1.statusCw) btnConveyor1.Text = "CW";
+                else if (conveyor1.statusCcw) btnConveyor1.Text = "CCW";
+                if (!conveyor2.statusCw && !conveyor2.statusCcw) btnConveyor2.Text = "";
+                else if (conveyor2.statusCw) btnConveyor2.Text = "CW";
+                else if (conveyor2.statusCcw) btnConveyor2.Text = "CCW";
+                if (!conveyor3.statusCw && !conveyor3.statusCcw) btnConveyor3.Text = "";
+                else if (conveyor3.statusCw) btnConveyor3.Text = "CW";
+                else if (conveyor3.statusCcw) btnConveyor3.Text = "CCW";
+                if (!conveyor4.statusCw && !conveyor4.statusCcw) btnConveyor1.Text = "";
+                else if (conveyor4.statusCw) btnConveyor4.Text = "CW";
+                else if (conveyor4.statusCcw) btnConveyor4.Text = "CCW";
+                if (!conveyorS.statusCw && !conveyorS.statusCcw) btnConveyor1.Text = "";
+                else if (conveyorS.statusCw) btnConveyorS.Text = "CW";
+                else if (conveyorS.statusCcw) btnConveyorS.Text = "CCW";
+
+                ConvMotionBlink = true;
             }
         }
-        private void showDataToolStripMenuItem1_Click(object sender, EventArgs e)
+
+        private void MainSchedulerProc_Tick(object sender, EventArgs e)
         {
-            Form2 objForm2 = new Form2(this);
-            objForm2.Show();
-        }
-        private void openToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Form3 objForm3 = new Form3(this);
-            objForm3.Show();
-            this.Hide();
-        }
-        private void tBoxDataIN_TextChanged(object sender, EventArgs e)
-        {
-            if(toolStripComboBox_RxDataPosition.Text == "BOTTOM")
+            conveyor1.Process();
+            conveyor2.Process();
+            conveyor3.Process();
+            conveyor4.Process();
+            conveyorS.Process();
+
+            PioExchanger();
+            DataExchanger();
+            MotionControl();
+            Simulator();
+
+            if (barcode.IsSuccess == true)
             {
-                tBoxDataIN.SelectionStart = tBoxDataIN.Text.Length;
-                tBoxDataIN.ScrollToCaret();
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine(barcode.GetData());
+                Console.ResetColor();
+                barcode.IsSuccess = false;
             }
         }
-        private void cBoxCOMPORT_DropDown(object sender, EventArgs e)
+        private void DataExchanger()
         {
-            string[] ports = SerialPort.GetPortNames();   //현재 컴퓨터에 연결된 모든 시리얼 포트의 이름을 문자열 배열로 반환함(네임스페이스 System.IO.Ports필요)
-            cBoxCOMPORT.Items.Clear();
-            cBoxCOMPORT.Items.AddRange(ports);   //ports에 들어있는 모든 문자열을 콤보박스에 추가함
-        }
-        private void tBoxDataOut_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            char c = e.KeyChar;
-
-            if (toolStripComboBox_TxDataFormat.Text == "Hex")
+            if (conveyor1.Compt)
             {
-                char uppercase = char.ToUpper(c);
-
-                if (!char.IsDigit(uppercase) && uppercase != 8 && uppercase != 46 && uppercase != ',' && !(uppercase >= 65 && uppercase <= 70))
+                if (conveyor1.LReq)
                 {
-                    e.Handled = true;
+                    if (conveyorS.carrier.id != 0)
+                    {
+                        conveyor1.carrier.id = conveyorS.carrier.id;
+                        conveyor1.carrier.source = conveyorS.carrier.source;
+                        conveyor1.carrier.dest = conveyorS.carrier.dest;
+                        conveyor1.carrier.use = conveyorS.carrier.use;
+                        conveyorS.carrier.Clear();
+
+                        Console.WriteLine("Carrier Data Move : S -> 1");
+                    }
+                }
+                if (conveyor1.UReq)
+                {
+                    if (conveyor1.carrier.id != 0)
+                    {
+                        conveyorS.carrier.id = conveyor1.carrier.id;
+                        conveyorS.carrier.source = conveyor1.carrier.source;
+                        conveyorS.carrier.dest = conveyor1.carrier.dest;
+                        conveyorS.carrier.use = conveyor1.carrier.use;
+                        conveyor1.carrier.Clear();
+
+                        Console.WriteLine("Carrier Data Move : 1 -> S");
+                    }
                 }
             }
-            else if (toolStripComboBox_TxDataFormat.Text == "Decimal")
+            if (conveyor2.Compt)
             {
-                if (!char.IsDigit(c) && c != 8 && c != 46 && c != ',')
+                if (conveyor2.LReq)
                 {
-                    e.Handled = true;
+                    if (conveyorS.carrier.id != 0)
+                    {
+                        conveyor2.carrier.id = conveyorS.carrier.id;
+                        conveyor2.carrier.source = conveyorS.carrier.source;
+                        conveyor2.carrier.dest = conveyorS.carrier.dest;
+                        conveyor2.carrier.use = conveyorS.carrier.use;
+                        conveyorS.carrier.Clear();
+
+                        Console.WriteLine("Carrier Data Move : S -> 2");
+                    }
+                }
+                if (conveyor2.UReq)
+                {
+                    if (conveyor2.carrier.id != 0)
+                    {
+                        conveyorS.carrier.id = conveyor2.carrier.id;
+                        conveyorS.carrier.source = conveyor2.carrier.source;
+                        conveyorS.carrier.dest = conveyor2.carrier.dest;
+                        conveyorS.carrier.use = conveyor2.carrier.use;
+                        conveyor2.carrier.Clear();
+
+                        Console.WriteLine("Carrier Data Move : 2 -> S");
+                    }
                 }
             }
-            else if (toolStripComboBox_TxDataFormat.Text == "Binary")
+            if (conveyor3.Compt)
             {
-                if (c != 49 && c != 48 && c != 8 && c != 46 && c != ',')
+                if (conveyor3.LReq)
                 {
-                    e.Handled = true;
+                    if (conveyorS.carrier.id != 0)
+                    {
+                        conveyor3.carrier.id = conveyorS.carrier.id;
+                        conveyor3.carrier.source = conveyorS.carrier.source;
+                        conveyor3.carrier.dest = conveyorS.carrier.dest;
+                        conveyor3.carrier.use = conveyorS.carrier.use;
+                        conveyorS.carrier.Clear();
+
+                        Console.WriteLine("Carrier Data Move : S -> 3");
+                    }
+                }
+                if (conveyor3.UReq)
+                {
+                    if (conveyor3.carrier.id != 0)
+                    {
+                        conveyorS.carrier.id = conveyor3.carrier.id;
+                        conveyorS.carrier.source = conveyor3.carrier.source;
+                        conveyorS.carrier.dest = conveyor3.carrier.dest;
+                        conveyorS.carrier.use = conveyor3.carrier.use;
+                        conveyor3.carrier.Clear();
+
+                        Console.WriteLine("Carrier Data Move : 3 -> S");
+                    }
                 }
             }
-            else if (toolStripComboBox_TxDataFormat.Text == "Char") { }
+            if (conveyor4.Compt)
+            {
+                if (conveyor4.LReq)
+                {
+                    if (conveyorS.carrier.id != 0)
+                    {
+                        conveyor4.carrier.id = conveyorS.carrier.id;
+                        conveyor4.carrier.source = conveyorS.carrier.source;
+                        conveyor4.carrier.dest = conveyorS.carrier.dest;
+                        conveyor4.carrier.use = conveyorS.carrier.use;
+                        conveyorS.carrier.Clear();
+
+                        Console.WriteLine("Carrier Data Move : S -> 4");
+                    }
+                }
+                if (conveyor4.UReq)
+                {
+                    if (conveyor4.carrier.id != 0)
+                    {
+                        conveyorS.carrier.id = conveyor4.carrier.id;
+                        conveyorS.carrier.source = conveyor4.carrier.source;
+                        conveyorS.carrier.dest = conveyor4.carrier.dest;
+                        conveyorS.carrier.use = conveyor4.carrier.use;
+                        conveyor4.carrier.Clear();
+
+                        Console.WriteLine("Carrier Data Move : 4 -> S");
+                    }
+                }
+            }
         }
-        private void toolStripComboBox_TxDataFormat_SelectionChangeCommitted(object sender, EventArgs e)
+        private void MotionControl()
         {
-            tBoxDataOut.Clear();
+            switch (conveyorS.TargetPosition)
+            {
+                case CConveyorS.SERVO_POS.CONV_NONE:
+                    btnConveyorS.Location = new System.Drawing.Point(230, 160);
+                    cbSensorS_1.Location = new System.Drawing.Point(170, 160);
+                    cbSensorS_2.Location = new System.Drawing.Point(170, 240);
+                    break;
+                case CConveyorS.SERVO_POS.CONV1:
+                    btnConveyorS.Location = new System.Drawing.Point(100, 160);
+                    cbSensorS_1.Location = new System.Drawing.Point(40, 160);
+                    cbSensorS_2.Location = new System.Drawing.Point(40, 240);
+                    break;
+                case CConveyorS.SERVO_POS.CONV2:
+                    btnConveyorS.Location = new System.Drawing.Point(360, 160);
+                    cbSensorS_1.Location = new System.Drawing.Point(300, 160);
+                    cbSensorS_2.Location = new System.Drawing.Point(300, 240);
+                    break;
+                case CConveyorS.SERVO_POS.CONV3:
+                    btnConveyorS.Location = new System.Drawing.Point(100, 160);
+                    cbSensorS_1.Location = new System.Drawing.Point(40, 160);
+                    cbSensorS_2.Location = new System.Drawing.Point(40, 240);
+                    break;
+                case CConveyorS.SERVO_POS.CONV4:
+                    btnConveyorS.Location = new System.Drawing.Point(360, 160);
+                    cbSensorS_1.Location = new System.Drawing.Point(300, 160);
+                    cbSensorS_2.Location = new System.Drawing.Point(300, 240);
+                    break;
+                default:
+                    btnConveyorS.Location = new System.Drawing.Point(230, 160);
+                    cbSensorS_1.Location = new System.Drawing.Point(170, 160);
+                    cbSensorS_2.Location = new System.Drawing.Point(170, 240);
+                    break;
+            }
+            conveyorS.CurrenPosition = conveyorS.TargetPosition;
+        }
+        private void PioExchanger()
+        {
+            conveyor1.TrReq = conveyorS.ConvPio1.TrReq;
+            conveyor1.Busy = conveyorS.ConvPio1.Busy;
+            conveyor1.Compt = conveyorS.ConvPio1.Compt;
+            conveyorS.ConvPio1.LReq = conveyor1.LReq;
+            conveyorS.ConvPio1.UReq = conveyor1.UReq;
+            conveyorS.ConvPio1.Ready = conveyor1.Ready;
 
-            string message = "If you are not using char data format, append the comma (,) after each byte data Otherwise, the byte data will ignore. \n" +
-                "Example :\t255, -> One byte data \n" +
-                "\t255,128,140, -> Two or more byte data \n" +
-                "\t120,144,189, -> The 189 will ignore cause has no comma (,)";
-            MessageBox.Show(message, "Warning", MessageBoxButtons.OK);
+            conveyor2.TrReq = conveyorS.ConvPio2.TrReq;
+            conveyor2.Busy = conveyorS.ConvPio2.Busy;
+            conveyor2.Compt = conveyorS.ConvPio2.Compt;
+            conveyorS.ConvPio2.LReq = conveyor2.LReq;
+            conveyorS.ConvPio2.UReq = conveyor2.UReq;
+            conveyorS.ConvPio2.Ready = conveyor2.Ready;
+
+            conveyor3.TrReq = conveyorS.ConvPio3.TrReq;
+            conveyor3.Busy = conveyorS.ConvPio3.Busy;
+            conveyor3.Compt = conveyorS.ConvPio3.Compt;
+            conveyorS.ConvPio3.LReq = conveyor3.LReq;
+            conveyorS.ConvPio3.UReq = conveyor3.UReq;
+            conveyorS.ConvPio3.Ready = conveyor3.Ready;
+
+            conveyor4.TrReq = conveyorS.ConvPio4.TrReq;
+            conveyor4.Busy = conveyorS.ConvPio4.Busy;
+            conveyor4.Compt = conveyorS.ConvPio4.Compt;
+            conveyorS.ConvPio4.LReq = conveyor4.LReq;
+            conveyorS.ConvPio4.UReq = conveyor4.UReq;
+            conveyorS.ConvPio4.Ready = conveyor4.Ready;
         }
 
-        #endregion
+        UInt16[] ConvTimer = new UInt16[5];
+        public void Simulator()
+        {
+            if (blsSimulatorMode)
+            {
+                if (conveyor1.carrier.id != 0 && conveyor1.statusCw)
+                {
+                    ConvTimer[0]++;
+                    if (ConvTimer[0] > 5)
+                    {
+                        cbSensor1_1.Checked = true;
+                        ConvTimer[0] = 0;
+                    }
+                }
+                else
+                {
+                    if (conveyor1.carrier.id == 0)
+                    {
+                        cbSensor1_1.Checked = false;
+                        cbSensor1_2.Checked = false;
+                    }
+                    ConvTimer[0] = 0;
+                }
+                if (conveyor2.carrier.id != 0 && conveyor2.statusCcw)
+                {
+                    ConvTimer[1]++;
+                    if (ConvTimer[1] > 5)
+                    {
+                        cbSensor2_2.Checked = true;
+                        ConvTimer[1] = 0;
+                    }
+                }
+                else
+                {
+                    if (conveyor2.carrier.id == 0)
+                    {
+                        cbSensor2_2.Checked = false;
+                    }
+                    ConvTimer[1] = 0;
+                }
+                if (conveyor3.carrier.id != 0 && conveyor3.statusCcw)
+                {
+                    ConvTimer[2]++;
+                    if (ConvTimer[2] > 5)
+                    {
+                        cbSensor3_2.Checked = true;
+                        ConvTimer[2] = 0;
+                    }
+                }
+                else
+                {
+                    if (conveyor3.carrier.id == 0)
+                    {
+                        cbSensor3_2.Checked = false;
+                    }
+                    ConvTimer[2] = 0;
+                }
+                if (conveyor4.carrier.id != 0 && conveyor4.statusCcw)
+                {
+                    ConvTimer[3]++;
+                    if (ConvTimer[3] > 5)
+                    { 
+                        cbSensor4_2.Checked = true;
+                        ConvTimer[3] = 0;
+                    }
+                }
+                else
+                {
+                    if (conveyor4.carrier.id == 0)
+                    {
+                        cbSensor4_2.Checked = false;
+                    }
+                    ConvTimer[3] = 0;
+                }
+                if (conveyorS.carrier.id == 0)
+                {
+                    if (conveyorS.statusCcw)
+                    {
+                        ConvTimer[4]++;
+                        if (ConvTimer[4] > 5)
+                        {
+                            cbSensorS_2.Checked = true;
+                            ConvTimer[4] = 0;
+                        }
+                    }
+                    else if (conveyorS.statusCw)
+                    {
+                        ConvTimer[4]++;
+                        if (ConvTimer[4] > 5)
+                        {
+                            cbSensorS_1.Checked = true;
+                            ConvTimer[4] = 0;
+                        }
+                    }
+                }
+                else
+                {
+                    if(conveyorS.statusCcw || conveyorS.statusCw)
+                    {
+                        ConvTimer[4]++;
+                        if (ConvTimer[4] > 5)
+                        {
+                            cbSensorS_1.Checked = false;
+                            cbSensorS_2.Checked = false;
+                        }
+                    }
+                }
+            }
+        }
+        private void cbSensor1_1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbSensor1_1.Checked) conveyor1.sensor1 = true;
+            else conveyor1.sensor1 = false;
+        }
+        private void cbSensor1_2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbSensor1_2.Checked) conveyor1.sensor2 = true;
+            else conveyor1.sensor2 = false;
+        }
+        private void cbSensor2_1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbSensor2_1.Checked) conveyor2.sensor1 = true;
+            else conveyor2.sensor1 = false;
+        }
+        private void cbSensor2_2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbSensor2_2.Checked) conveyor2.sensor2 = true;
+            else conveyor2.sensor2 = false;
+        }
+        private void cbSensor3_1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbSensor3_1.Checked) conveyor3.sensor1 = true;
+            else conveyor3.sensor1 = false;
+        }
+        private void cbSensor3_2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbSensor3_2.Checked) conveyor3.sensor2 = true;
+            else conveyor3.sensor2 = false;
+        }
+        private void cbSensor4_1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbSensor4_1.Checked) conveyor4.sensor1 = true;
+            else conveyor4.sensor1 = false;
+        }
+        private void cbSensor4_2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbSensor4_2.Checked) conveyor4.sensor2 = true;
+            else conveyor4.sensor2 = false;
+        }
+        private void cbSensorS_1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbSensorS_1.Checked) conveyorS.sensor1 = true;
+            else conveyorS.sensor1 = false;
+        }
+        private void cbSensorS_2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbSensorS_2.Checked) conveyorS.sensor2 = true;
+            else conveyorS.sensor2 = false;
+        }
+
+        private enum CONV_TYPE
+        {
+            CONV_NONE, CONV1,CONV2, CONV3, CONV4, CONVS
+        }
+        private CONV_TYPE selectedConv;
+        private void SelectConv(CONV_TYPE select)
+        {
+            btnConveyor1.BackColor = System.Drawing.Color.Lime;
+            btnConveyor2.BackColor = System.Drawing.Color.Lime;
+            btnConveyor3.BackColor = System.Drawing.Color.Lime;
+            btnConveyor4.BackColor = System.Drawing.Color.Lime;
+            btnConveyorS.BackColor = System.Drawing.Color.Lime;
+            if (select == CONV_TYPE.CONV1) btnConveyor1.BackColor = System.Drawing.Color.Azure;
+            if (select == CONV_TYPE.CONV2) btnConveyor2.BackColor = System.Drawing.Color.Azure;
+            if (select == CONV_TYPE.CONV3) btnConveyor3.BackColor = System.Drawing.Color.Azure;
+            if (select == CONV_TYPE.CONV4) btnConveyor4.BackColor = System.Drawing.Color.Azure;
+            if (select == CONV_TYPE.CONVS) btnConveyorS.BackColor = System.Drawing.Color.Azure;
+        }
+
+        private void btnConveyor1_Click(object sender, EventArgs e)
+        {
+            selectedConv = CONV_TYPE.CONV1;
+            SelectConv(selectedConv);
+        }
+
+        private void btnConveyor2_Click(object sender, EventArgs e)
+        {
+            selectedConv = CONV_TYPE.CONV2;
+            SelectConv(selectedConv);
+        }
+
+        private void btnConveyor3_Click(object sender, EventArgs e)
+        {
+            selectedConv = CONV_TYPE.CONV3;
+            SelectConv(selectedConv);
+        }
+
+        private void btnConveyor4_Click(object sender, EventArgs e)
+        {
+            selectedConv = CONV_TYPE.CONV4;
+            SelectConv(selectedConv);
+        }
+
+        private void btnConveyorS_Click(object sender, EventArgs e)
+        {
+            selectedConv = CONV_TYPE.CONVS;
+            SelectConv(selectedConv);
+        }
+
+        private void serialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        {
+
+        }
     }
 }
