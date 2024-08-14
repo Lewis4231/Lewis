@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Music_App
+namespace ConfigSQL
 {
     /// <summary>
     /// App.xaml에 대한 상호 작용 논리

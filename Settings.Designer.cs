@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Music_App.Properties
+namespace ConfigSQL.Properties
 {
 
 
