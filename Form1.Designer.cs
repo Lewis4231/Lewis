@@ -1,4 +1,4 @@
-﻿namespace ConveyorCs
+﻿namespace InventoryManagement
 {
     partial class Form1
     {
@@ -28,283 +28,151 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.cbSensor2_1 = new System.Windows.Forms.CheckBox();
-            this.cbSensorS_1 = new System.Windows.Forms.CheckBox();
-            this.cbSensor4_1 = new System.Windows.Forms.CheckBox();
-            this.cbSensorS_2 = new System.Windows.Forms.CheckBox();
-            this.cbSensor1_1 = new System.Windows.Forms.CheckBox();
-            this.cbSensor1_2 = new System.Windows.Forms.CheckBox();
-            this.cbSensor3_2 = new System.Windows.Forms.CheckBox();
-            this.cbSensor3_1 = new System.Windows.Forms.CheckBox();
-            this.cbSensor2_2 = new System.Windows.Forms.CheckBox();
-            this.cbSensor4_2 = new System.Windows.Forms.CheckBox();
-            this.btnConveyor3 = new System.Windows.Forms.Button();
-            this.btnConveyorS = new System.Windows.Forms.Button();
-            this.btnConveyor2 = new System.Windows.Forms.Button();
-            this.btnConveyor4 = new System.Windows.Forms.Button();
-            this.btnConveyor1 = new System.Windows.Forms.Button();
-            this.btnAuto = new System.Windows.Forms.Button();
-            this.btnTakeIn = new System.Windows.Forms.Button();
-            this.btnStop = new System.Windows.Forms.Button();
-            this.btnTakeOut = new System.Windows.Forms.Button();
-            this.ConvMotionProc = new System.Windows.Forms.Timer(this.components);
-            this.MainSchedulerProc = new System.Windows.Forms.Timer(this.components);
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lblClear = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.PasswordTb = new System.Windows.Forms.TextBox();
+            this.UnameTb = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // cbSensor2_1
+            // panel1
             // 
-            this.cbSensor2_1.AutoSize = true;
-            this.cbSensor2_1.Location = new System.Drawing.Point(300, 380);
-            this.cbSensor2_1.Name = "cbSensor2_1";
-            this.cbSensor2_1.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor2_1.TabIndex = 0;
-            this.cbSensor2_1.Text = "2-1";
-            this.cbSensor2_1.UseVisualStyleBackColor = true;
-            this.cbSensor2_1.CheckedChanged += new System.EventHandler(this.cbSensor2_1_CheckedChanged);
+            this.panel1.BackColor = System.Drawing.Color.DodgerBlue;
+            this.panel1.Controls.Add(this.guna2CircleButton1);
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Controls.Add(this.lblClear);
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.PasswordTb);
+            this.panel1.Controls.Add(this.UnameTb);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Location = new System.Drawing.Point(143, 63);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(242, 332);
+            this.panel1.TabIndex = 0;
             // 
-            // cbSensorS_1
+            // guna2CircleButton1
             // 
-            this.cbSensorS_1.AutoSize = true;
-            this.cbSensorS_1.Location = new System.Drawing.Point(175, 240);
-            this.cbSensorS_1.Name = "cbSensorS_1";
-            this.cbSensorS_1.Size = new System.Drawing.Size(44, 16);
-            this.cbSensorS_1.TabIndex = 0;
-            this.cbSensorS_1.Text = "S-1";
-            this.cbSensorS_1.UseVisualStyleBackColor = true;
-            this.cbSensorS_1.CheckedChanged += new System.EventHandler(this.cbSensorS_1_CheckedChanged);
+            this.guna2CircleButton1.BackColor = System.Drawing.Color.DodgerBlue;
+            this.guna2CircleButton1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2CircleButton1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2CircleButton1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2CircleButton1.FillColor = System.Drawing.Color.DodgerBlue;
+            this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2CircleButton1.ForeColor = System.Drawing.Color.Black;
+            this.guna2CircleButton1.Location = new System.Drawing.Point(214, 0);
+            this.guna2CircleButton1.Name = "guna2CircleButton1";
+            this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.guna2CircleButton1.Size = new System.Drawing.Size(28, 28);
+            this.guna2CircleButton1.TabIndex = 1;
+            this.guna2CircleButton1.Text = "x";
+            this.guna2CircleButton1.Click += new System.EventHandler(this.guna2CircleButton1_Click);
             // 
-            // cbSensor4_1
+            // pictureBox1
             // 
-            this.cbSensor4_1.AutoSize = true;
-            this.cbSensor4_1.Location = new System.Drawing.Point(300, 100);
-            this.cbSensor4_1.Name = "cbSensor4_1";
-            this.cbSensor4_1.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor4_1.TabIndex = 0;
-            this.cbSensor4_1.Text = "4-1";
-            this.cbSensor4_1.UseVisualStyleBackColor = true;
-            this.cbSensor4_1.CheckedChanged += new System.EventHandler(this.cbSensor4_1_CheckedChanged);
+            this.pictureBox1.Image = global::InventoryManagement.Properties.Resources.Ex;
+            this.pictureBox1.Location = new System.Drawing.Point(62, 67);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(113, 67);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 6;
+            this.pictureBox1.TabStop = false;
             // 
-            // cbSensorS_2
+            // lblClear
             // 
-            this.cbSensorS_2.AutoSize = true;
-            this.cbSensorS_2.Location = new System.Drawing.Point(175, 160);
-            this.cbSensorS_2.Name = "cbSensorS_2";
-            this.cbSensorS_2.Size = new System.Drawing.Size(44, 16);
-            this.cbSensorS_2.TabIndex = 0;
-            this.cbSensorS_2.Text = "S-2";
-            this.cbSensorS_2.UseVisualStyleBackColor = true;
-            this.cbSensorS_2.CheckedChanged += new System.EventHandler(this.cbSensorS_2_CheckedChanged);
+            this.lblClear.AutoSize = true;
+            this.lblClear.BackColor = System.Drawing.Color.DodgerBlue;
+            this.lblClear.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClear.ForeColor = System.Drawing.Color.Crimson;
+            this.lblClear.Location = new System.Drawing.Point(27, 298);
+            this.lblClear.Name = "lblClear";
+            this.lblClear.Size = new System.Drawing.Size(43, 16);
+            this.lblClear.TabIndex = 3;
+            this.lblClear.Text = "Clear";
+            this.lblClear.Click += new System.EventHandler(this.lblClear_Click);
             // 
-            // cbSensor1_1
+            // button1
             // 
-            this.cbSensor1_1.AutoSize = true;
-            this.cbSensor1_1.Location = new System.Drawing.Point(50, 380);
-            this.cbSensor1_1.Name = "cbSensor1_1";
-            this.cbSensor1_1.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor1_1.TabIndex = 0;
-            this.cbSensor1_1.Text = "1-1";
-            this.cbSensor1_1.UseVisualStyleBackColor = true;
-            this.cbSensor1_1.CheckedChanged += new System.EventHandler(this.cbSensor1_1_CheckedChanged);
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.button1.Location = new System.Drawing.Point(26, 235);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(190, 46);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "LOGIN";
+            this.button1.UseVisualStyleBackColor = false;
             // 
-            // cbSensor1_2
+            // PasswordTb
             // 
-            this.cbSensor1_2.AutoSize = true;
-            this.cbSensor1_2.Location = new System.Drawing.Point(50, 300);
-            this.cbSensor1_2.Name = "cbSensor1_2";
-            this.cbSensor1_2.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor1_2.TabIndex = 0;
-            this.cbSensor1_2.Text = "1-2";
-            this.cbSensor1_2.UseVisualStyleBackColor = true;
-            this.cbSensor1_2.CheckedChanged += new System.EventHandler(this.cbSensor1_2_CheckedChanged);
+            this.PasswordTb.BackColor = System.Drawing.Color.DodgerBlue;
+            this.PasswordTb.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PasswordTb.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PasswordTb.ForeColor = System.Drawing.Color.White;
+            this.PasswordTb.Location = new System.Drawing.Point(26, 192);
+            this.PasswordTb.Name = "PasswordTb";
+            this.PasswordTb.PasswordChar = '*';
+            this.PasswordTb.Size = new System.Drawing.Size(190, 22);
+            this.PasswordTb.TabIndex = 3;
             // 
-            // cbSensor3_2
+            // UnameTb
             // 
-            this.cbSensor3_2.AutoSize = true;
-            this.cbSensor3_2.Location = new System.Drawing.Point(50, 20);
-            this.cbSensor3_2.Name = "cbSensor3_2";
-            this.cbSensor3_2.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor3_2.TabIndex = 0;
-            this.cbSensor3_2.Text = "3-2";
-            this.cbSensor3_2.UseVisualStyleBackColor = true;
-            this.cbSensor3_2.CheckedChanged += new System.EventHandler(this.cbSensor3_2_CheckedChanged);
+            this.UnameTb.BackColor = System.Drawing.Color.DodgerBlue;
+            this.UnameTb.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.UnameTb.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UnameTb.ForeColor = System.Drawing.Color.White;
+            this.UnameTb.Location = new System.Drawing.Point(26, 154);
+            this.UnameTb.Name = "UnameTb";
+            this.UnameTb.Size = new System.Drawing.Size(190, 22);
+            this.UnameTb.TabIndex = 2;
             // 
-            // cbSensor3_1
+            // label1
             // 
-            this.cbSensor3_1.AutoSize = true;
-            this.cbSensor3_1.Location = new System.Drawing.Point(50, 100);
-            this.cbSensor3_1.Name = "cbSensor3_1";
-            this.cbSensor3_1.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor3_1.TabIndex = 0;
-            this.cbSensor3_1.Text = "3-1";
-            this.cbSensor3_1.UseVisualStyleBackColor = true;
-            this.cbSensor3_1.CheckedChanged += new System.EventHandler(this.cbSensor3_1_CheckedChanged);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(85, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(69, 30);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Login";
             // 
-            // cbSensor2_2
+            // label2
             // 
-            this.cbSensor2_2.AutoSize = true;
-            this.cbSensor2_2.Location = new System.Drawing.Point(300, 300);
-            this.cbSensor2_2.Name = "cbSensor2_2";
-            this.cbSensor2_2.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor2_2.TabIndex = 0;
-            this.cbSensor2_2.Text = "2-2";
-            this.cbSensor2_2.UseVisualStyleBackColor = true;
-            this.cbSensor2_2.CheckedChanged += new System.EventHandler(this.cbSensor2_2_CheckedChanged);
-            // 
-            // cbSensor4_2
-            // 
-            this.cbSensor4_2.AutoSize = true;
-            this.cbSensor4_2.Location = new System.Drawing.Point(300, 20);
-            this.cbSensor4_2.Name = "cbSensor4_2";
-            this.cbSensor4_2.Size = new System.Drawing.Size(42, 16);
-            this.cbSensor4_2.TabIndex = 0;
-            this.cbSensor4_2.Text = "4-2";
-            this.cbSensor4_2.UseVisualStyleBackColor = true;
-            this.cbSensor4_2.CheckedChanged += new System.EventHandler(this.cbSensor4_2_CheckedChanged);
-            // 
-            // btnConveyor3
-            // 
-            this.btnConveyor3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnConveyor3.Location = new System.Drawing.Point(110, 20);
-            this.btnConveyor3.Name = "btnConveyor3";
-            this.btnConveyor3.Size = new System.Drawing.Size(180, 110);
-            this.btnConveyor3.TabIndex = 1;
-            this.btnConveyor3.UseVisualStyleBackColor = false;
-            this.btnConveyor3.Click += new System.EventHandler(this.btnConveyor3_Click);
-            // 
-            // btnConveyorS
-            // 
-            this.btnConveyorS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnConveyorS.Location = new System.Drawing.Point(230, 160);
-            this.btnConveyorS.Name = "btnConveyorS";
-            this.btnConveyorS.Size = new System.Drawing.Size(180, 110);
-            this.btnConveyorS.TabIndex = 2;
-            this.btnConveyorS.UseVisualStyleBackColor = false;
-            this.btnConveyorS.Click += new System.EventHandler(this.btnConveyorS_Click);
-            // 
-            // btnConveyor2
-            // 
-            this.btnConveyor2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnConveyor2.Location = new System.Drawing.Point(360, 300);
-            this.btnConveyor2.Name = "btnConveyor2";
-            this.btnConveyor2.Size = new System.Drawing.Size(180, 110);
-            this.btnConveyor2.TabIndex = 3;
-            this.btnConveyor2.UseVisualStyleBackColor = false;
-            this.btnConveyor2.Click += new System.EventHandler(this.btnConveyor2_Click);
-            // 
-            // btnConveyor4
-            // 
-            this.btnConveyor4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnConveyor4.Location = new System.Drawing.Point(360, 20);
-            this.btnConveyor4.Name = "btnConveyor4";
-            this.btnConveyor4.Size = new System.Drawing.Size(180, 110);
-            this.btnConveyor4.TabIndex = 4;
-            this.btnConveyor4.UseVisualStyleBackColor = false;
-            this.btnConveyor4.Click += new System.EventHandler(this.btnConveyor4_Click);
-            // 
-            // btnConveyor1
-            // 
-            this.btnConveyor1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnConveyor1.Location = new System.Drawing.Point(110, 300);
-            this.btnConveyor1.Name = "btnConveyor1";
-            this.btnConveyor1.Size = new System.Drawing.Size(180, 110);
-            this.btnConveyor1.TabIndex = 5;
-            this.btnConveyor1.Text = " ";
-            this.btnConveyor1.UseVisualStyleBackColor = false;
-            this.btnConveyor1.Click += new System.EventHandler(this.btnConveyor1_Click);
-            // 
-            // btnAuto
-            // 
-            this.btnAuto.BackColor = System.Drawing.Color.White;
-            this.btnAuto.Location = new System.Drawing.Point(600, 20);
-            this.btnAuto.Name = "btnAuto";
-            this.btnAuto.Size = new System.Drawing.Size(150, 90);
-            this.btnAuto.TabIndex = 6;
-            this.btnAuto.Text = "자동";
-            this.btnAuto.UseVisualStyleBackColor = false;
-            this.btnAuto.Click += new System.EventHandler(this.btnAuto_Click);
-            // 
-            // btnTakeIn
-            // 
-            this.btnTakeIn.BackColor = System.Drawing.Color.White;
-            this.btnTakeIn.Location = new System.Drawing.Point(600, 320);
-            this.btnTakeIn.Name = "btnTakeIn";
-            this.btnTakeIn.Size = new System.Drawing.Size(150, 90);
-            this.btnTakeIn.TabIndex = 7;
-            this.btnTakeIn.Text = "입고";
-            this.btnTakeIn.UseVisualStyleBackColor = false;
-            this.btnTakeIn.Click += new System.EventHandler(this.btnTakeIn_Click);
-            // 
-            // btnStop
-            // 
-            this.btnStop.BackColor = System.Drawing.Color.White;
-            this.btnStop.Location = new System.Drawing.Point(600, 220);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(150, 90);
-            this.btnStop.TabIndex = 8;
-            this.btnStop.Text = "정지";
-            this.btnStop.UseVisualStyleBackColor = false;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
-            // 
-            // btnTakeOut
-            // 
-            this.btnTakeOut.BackColor = System.Drawing.Color.White;
-            this.btnTakeOut.Location = new System.Drawing.Point(600, 120);
-            this.btnTakeOut.Name = "btnTakeOut";
-            this.btnTakeOut.Size = new System.Drawing.Size(150, 90);
-            this.btnTakeOut.TabIndex = 9;
-            this.btnTakeOut.Text = "반출";
-            this.btnTakeOut.UseVisualStyleBackColor = false;
-            this.btnTakeOut.Click += new System.EventHandler(this.btnTakeOut_Click);
-            // 
-            // ConvMotionProc
-            // 
-            this.ConvMotionProc.Enabled = true;
-            this.ConvMotionProc.Interval = 1000;
-            this.ConvMotionProc.Tick += new System.EventHandler(this.ConvMotionProc_Tick);
-            // 
-            // MainSchedulerProc
-            // 
-            this.MainSchedulerProc.Enabled = true;
-            this.MainSchedulerProc.Interval = 1000;
-            this.MainSchedulerProc.Tick += new System.EventHandler(this.MainSchedulerProc_Tick);
-            // 
-            // serialPort1
-            // 
-            this.serialPort1.BaudRate = 19200;
-            this.serialPort1.DataBits = 7;
-            this.serialPort1.Parity = System.IO.Ports.Parity.Odd;
-            this.serialPort1.PortName = "COM4";
-            this.serialPort1.StopBits = System.IO.Ports.StopBits.Two;
-            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(86, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(378, 30);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "INVENTORY MANAGEMENT SYSTEM";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 441);
-            this.Controls.Add(this.btnTakeOut);
-            this.Controls.Add(this.btnStop);
-            this.Controls.Add(this.btnTakeIn);
-            this.Controls.Add(this.btnAuto);
-            this.Controls.Add(this.btnConveyor1);
-            this.Controls.Add(this.btnConveyor4);
-            this.Controls.Add(this.btnConveyor2);
-            this.Controls.Add(this.btnConveyorS);
-            this.Controls.Add(this.btnConveyor3);
-            this.Controls.Add(this.cbSensor4_2);
-            this.Controls.Add(this.cbSensor3_1);
-            this.Controls.Add(this.cbSensorS_2);
-            this.Controls.Add(this.cbSensor3_2);
-            this.Controls.Add(this.cbSensor2_2);
-            this.Controls.Add(this.cbSensor4_1);
-            this.Controls.Add(this.cbSensor1_2);
-            this.Controls.Add(this.cbSensor1_1);
-            this.Controls.Add(this.cbSensorS_1);
-            this.Controls.Add(this.cbSensor2_1);
+            this.BackgroundImage = global::InventoryManagement.Properties.Resources.background;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(514, 471);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
-            this.Text = "Conveyor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Form1";
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,28 +180,15 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox cbSensor2_1;
-        private System.Windows.Forms.CheckBox cbSensorS_1;
-        private System.Windows.Forms.CheckBox cbSensor4_1;
-        private System.Windows.Forms.CheckBox cbSensorS_2;
-        private System.Windows.Forms.CheckBox cbSensor1_1;
-        private System.Windows.Forms.CheckBox cbSensor1_2;
-        private System.Windows.Forms.CheckBox cbSensor3_2;
-        private System.Windows.Forms.CheckBox cbSensor3_1;
-        private System.Windows.Forms.CheckBox cbSensor2_2;
-        private System.Windows.Forms.CheckBox cbSensor4_2;
-        private System.Windows.Forms.Button btnConveyor3;
-        private System.Windows.Forms.Button btnConveyorS;
-        private System.Windows.Forms.Button btnConveyor2;
-        private System.Windows.Forms.Button btnConveyor4;
-        private System.Windows.Forms.Button btnConveyor1;
-        private System.Windows.Forms.Button btnAuto;
-        private System.Windows.Forms.Button btnTakeIn;
-        private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.Button btnTakeOut;
-        private System.Windows.Forms.Timer ConvMotionProc;
-        private System.Windows.Forms.Timer MainSchedulerProc;
-        private System.IO.Ports.SerialPort serialPort1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox PasswordTb;
+        private System.Windows.Forms.TextBox UnameTb;
+        private System.Windows.Forms.Label lblClear;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
     }
 }
 
