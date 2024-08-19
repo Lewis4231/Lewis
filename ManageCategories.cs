@@ -110,5 +110,12 @@ namespace InventoryManagement
         {
             populate();
         }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            HomeForm home = new HomeForm();
+            home.Show();
+            this.Hide();
+        }
     }
 }

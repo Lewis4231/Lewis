@@ -318,6 +318,7 @@
             this.btnHome.TabIndex = 10;
             this.btnHome.Text = "메인";
             this.btnHome.UseVisualStyleBackColor = false;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
             // btnDelete
             // 

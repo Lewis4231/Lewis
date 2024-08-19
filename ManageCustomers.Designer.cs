@@ -46,13 +46,13 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
+            this.OrderLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
+            this.AmountLabel = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
+            this.DateLabel = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CustomersGV)).BeginInit();
@@ -257,6 +257,7 @@
             this.btnHome.TabIndex = 16;
             this.btnHome.Text = "메인";
             this.btnHome.UseVisualStyleBackColor = false;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
             // btnDelete
             // 
@@ -315,23 +316,23 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.MediumVioletRed;
-            this.panel3.Controls.Add(this.label6);
+            this.panel3.Controls.Add(this.OrderLabel);
             this.panel3.Controls.Add(this.label5);
             this.panel3.Location = new System.Drawing.Point(46, 505);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(200, 100);
             this.panel3.TabIndex = 18;
             // 
-            // label6
+            // OrderLabel
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(69, 34);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(57, 30);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "수량";
+            this.OrderLabel.AutoSize = true;
+            this.OrderLabel.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OrderLabel.ForeColor = System.Drawing.Color.White;
+            this.OrderLabel.Location = new System.Drawing.Point(69, 34);
+            this.OrderLabel.Name = "OrderLabel";
+            this.OrderLabel.Size = new System.Drawing.Size(57, 30);
+            this.OrderLabel.TabIndex = 2;
+            this.OrderLabel.Text = "수량";
             // 
             // label5
             // 
@@ -347,23 +348,23 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.Green;
-            this.panel4.Controls.Add(this.label7);
+            this.panel4.Controls.Add(this.AmountLabel);
             this.panel4.Controls.Add(this.label8);
             this.panel4.Location = new System.Drawing.Point(296, 505);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(200, 100);
             this.panel4.TabIndex = 19;
             // 
-            // label7
+            // AmountLabel
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(69, 34);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(57, 30);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "총액";
+            this.AmountLabel.AutoSize = true;
+            this.AmountLabel.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AmountLabel.ForeColor = System.Drawing.Color.White;
+            this.AmountLabel.Location = new System.Drawing.Point(69, 34);
+            this.AmountLabel.Name = "AmountLabel";
+            this.AmountLabel.Size = new System.Drawing.Size(57, 30);
+            this.AmountLabel.TabIndex = 2;
+            this.AmountLabel.Text = "총액";
             // 
             // label8
             // 
@@ -379,24 +380,24 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.DarkBlue;
-            this.panel5.Controls.Add(this.label9);
+            this.panel5.Controls.Add(this.DateLabel);
             this.panel5.Controls.Add(this.label10);
             this.panel5.Location = new System.Drawing.Point(543, 505);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(200, 100);
             this.panel5.TabIndex = 19;
             // 
-            // label9
+            // DateLabel
             // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.DarkBlue;
-            this.label9.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(69, 34);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(57, 30);
-            this.label9.TabIndex = 2;
-            this.label9.Text = "날짜";
+            this.DateLabel.AutoSize = true;
+            this.DateLabel.BackColor = System.Drawing.Color.DarkBlue;
+            this.DateLabel.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DateLabel.ForeColor = System.Drawing.Color.White;
+            this.DateLabel.Location = new System.Drawing.Point(69, 34);
+            this.DateLabel.Name = "DateLabel";
+            this.DateLabel.Size = new System.Drawing.Size(57, 30);
+            this.DateLabel.TabIndex = 2;
+            this.DateLabel.Text = "날짜";
             // 
             // label10
             // 
@@ -465,12 +466,12 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label OrderLabel;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label AmountLabel;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label DateLabel;
         private System.Windows.Forms.Label label10;
     }
 }

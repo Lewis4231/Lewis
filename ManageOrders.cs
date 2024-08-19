@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Guna.UI2.WinForms.Suite;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -84,14 +85,18 @@ namespace InventoryManagement
         }
         void updateproduct()
         {
-            Con.Open();
             int id = Convert.ToInt32(ProductsGV.SelectedRows[0].Cells[0].Value.ToString());
             int newQty = stock - Convert.ToInt32(QtyTb.Text);
-            string query = "update ProductTbl set ProdQty = '" + newQty + "' where ProdId='" + id + "';";
-            SqlCommand cmd = new SqlCommand(query, Con);
-            cmd.ExecuteNonQuery();
-            Con.Close();
-            populateproducts();
+            if (newQty < 0) MessageBox.Show("실패하였습니다!");
+            else
+            {
+                Con.Open();
+                string query = "update ProductTbl set ProdQty = '" + newQty + "' where ProdId='" + id + "';";
+                SqlCommand cmd = new SqlCommand(query, Con);
+                cmd.ExecuteNonQuery();
+                Con.Close();
+                populateproducts();
+            }
         }
 
         int num = 0;
@@ -112,8 +117,8 @@ namespace InventoryManagement
             table.Columns.Add("상품 가격", typeof(int));
             table.Columns.Add("총 가격", typeof(int));
         }
-        
-        private void ProductsGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
+
+        private void ProductsGV_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             product = ProductsGV.SelectedRows[0].Cells[1].Value.ToString();
             //qty = Convert.ToInt32(QtyTb.Text);
@@ -122,12 +127,28 @@ namespace InventoryManagement
             //totprice = qty * uprice;
             flag = 1;
         }
+
+
+        //private void ProductsGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    product = ProductsGV.SelectedRows[0].Cells[1].Value.ToString();
+        //    //qty = Convert.ToInt32(QtyTb.Text);
+        //    stock = Convert.ToInt32(ProductsGV.SelectedRows[0].Cells[2].Value.ToString());
+        //    uprice = Convert.ToInt32(ProductsGV.SelectedRows[0].Cells[3].Value.ToString());
+        //    //totprice = qty * uprice;
+        //    flag = 1;
+        //}
         int sum = 0;
         private void btnAdd_Click(object sender, EventArgs e)
         {
             if (QtyTb.Text == "") MessageBox.Show("수량을 입력하세요!");
             else if (flag == 0) MessageBox.Show("상품을 선택하세요!");
-            else if (Convert.ToInt32(QtyTb.Text) > stock) MessageBox.Show("재고가 부족합니다!");
+            else if (Convert.ToInt32(QtyTb.Text) > stock) 
+            { 
+                MessageBox.Show("재고가 부족합니다!");
+
+                QtyTb.Text = "";
+            }
             else
             {
                 num = num + 1;
@@ -136,16 +157,73 @@ namespace InventoryManagement
 
                 table.Rows.Add(num, product, qty, uprice, totprice);
 
+                updateproduct();
+
                 OrderGv.DataSource = table;
                 flag = 0;
+                QtyTb.Text = "";
             }
             sum += totprice;
             TotAmount.Text = sum.ToString()+" 원";
+
+
+        }
+
+        private void btnInsert_Click(object sender, EventArgs e)
+        {
+            if (OrderIdTb.Text == "" || CustId.Text == "" || CustName.Text == "" || TotAmount.Text == "")
+            {
+                MessageBox.Show("빈칸을 채우세요");
+            }
+            else
+            {
+                string dt = orderdate.Value.ToString("yyyy-MM-dd");
+                //string dt = orderdate.Value.ToString();
+                Con.Open();
+                SqlCommand cmd = new SqlCommand("Insert into OrdersTbl Values('" + OrderIdTb.Text + "','" + CustId.Text + "','" + CustName.Text + "','" + dt + "'," + sum + ")", Con);
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("저장되었습니다!");
+                Con.Close();
+                OrderGv.DataSource = null;
+                //populate();
+                try
+                {
+
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            ViewOrders view = new ViewOrders();
+            view.Show();
+        }
+
+        private void ProductsGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void CustomersGV_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            CustId.Text = CustomersGV.SelectedRows[0].Cells[0].Value.ToString();
+            CustName.Text = CustomersGV.SelectedRows[0].Cells[1].Value.ToString();
+        }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            HomeForm home = new HomeForm();
+            home.Show();
+            this.Hide();
         }
 
         private void CustomersGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            CustId.Text = CustomersGV.SelectedRows[0].Cells[0].Value.ToString();
+
         }
 
         private void SearchCombo_SelectionChangeCommitted(object sender, EventArgs e)

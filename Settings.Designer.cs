@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ConfigSQL.Properties
+namespace InventoryManagement.Properties
 {
 
 

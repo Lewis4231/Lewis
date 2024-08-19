@@ -91,6 +91,23 @@ namespace InventoryManagement
             Customerid.Text = CustomersGV.SelectedRows[0].Cells[0].Value.ToString();
             CustomernameTb.Text = CustomersGV.SelectedRows[0].Cells[1].Value.ToString();
             CustomerPhoneTb.Text = CustomersGV.SelectedRows[0].Cells[2].Value.ToString();
+            Con.Open();
+            SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) from OrdersTbl where CustId = " + Customerid.Text + "", Con);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+            OrderLabel.Text = dt.Rows[0][0].ToString();
+            
+            SqlDataAdapter sda1 = new SqlDataAdapter("Select Sum(TotalAmt) from OrdersTbl where CustId = " + Customerid.Text + "", Con);
+            DataTable dt1 = new DataTable();
+            sda1.Fill(dt1);
+            AmountLabel.Text = dt1.Rows[0][0].ToString();
+            Con.Close();
+
+            SqlDataAdapter sda2 = new SqlDataAdapter("Select Max(OrderDate) from OrdersTbl where CustId = " + Customerid.Text + "", Con);
+            DataTable dt2 = new DataTable();
+            sda2.Fill(dt2);
+            DateLabel.Text = dt2.Rows[0][0].ToString();
+            Con.Close();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -113,6 +130,12 @@ namespace InventoryManagement
             }
             
         }
-        
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            HomeForm home = new HomeForm();
+            home.Show();
+            this.Hide();
+        }
     }
 }
